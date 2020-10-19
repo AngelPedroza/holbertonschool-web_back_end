@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Typing project."""
-from typing import Union, Sequence, List, Tuple, Any
+from typing import Union, Sequence, Any
 
 
 def safe_first_element(lst: Sequence[Any]) -> Union[Any, None]:
