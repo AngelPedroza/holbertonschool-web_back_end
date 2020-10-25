@@ -1,15 +1,14 @@
 #!usr/bin/python3
-""" 0-basic_cache.py - basic cache
-"""
+""" 0-basic_cache.py - basic cache"""
 
-from base_caching import *
+from base_caching import BaseCaching
 
 
 class BasicCache(BaseCaching):
-    """ BasicCache - class definition
-    """
+    """BasicCache"""
+
     def put(self, key, item):
-        """ put() - xxx
+        """ put() - Put elements in a dic
         Arguments:
         key: key of dictionary
         item: value of dictionary
@@ -19,7 +18,7 @@ class BasicCache(BaseCaching):
             self.cache_data[key] = item
 
     def get(self, key):
-        """ get() - xxx
+        """ get() - another .get
         Arguments:
         key: key of dictionary
         Returns dictionary value pertaining to key
