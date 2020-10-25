@@ -14,18 +14,20 @@ class LIFOCache(BaseCaching):
 
     def put(self, key, item):
         """Assing a key to a value"""
-        if key is not None or item is not None:
-            self.cache_data[key] = item
+        if key is None or item is None:
+            return
 
-            if len(self.cache_data) > BaseCaching.MAX_ITEMS:
-                to_discard = self.stack.pop()
-                del self.cache_data[to_discard]
-                print("DISCARD: {}".format(to_discard))
+        self.cache_data[key] = item
 
-            if key not in self.stack:
-                self.stack.append(key)
-            else:
-                self.move_to_last_in(key=key)
+        if len(self.cache_data) > BaseCaching.MAX_ITEMS:
+            to_discard = self.stack.pop()
+            del self.cache_data[to_discard]
+            print("DISCARD: {}".format(to_discard))
+
+        if key not in self.stack:
+            self.stack.append(key)
+        else:
+            self.move_to_last_in(key=key)
 
     def get(self, key):
         """ return the value in self.cache_data linked to key."""
