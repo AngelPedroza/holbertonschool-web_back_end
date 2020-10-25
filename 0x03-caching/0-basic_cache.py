@@ -1,11 +1,13 @@
 #!/usr/bin/python3
-""" BasicCaching module
-"""
+""" BasicCaching module"""
 from base_caching import BaseCaching
 
 
 class BasicCache(BaseCaching):
     """Basic Cache"""""
+    def __init__(self):
+        """Init function"""
+        super().__init__()
 
     def put(self, key, item):
         """Must assign value for the key."""
