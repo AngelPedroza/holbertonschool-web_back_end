@@ -1,6 +1,5 @@
 #!/usr/bin/python3
-""" BasicCaching module
-"""
+""" BasicCaching module"""
 from base_caching import BaseCaching
 
 
@@ -32,10 +31,7 @@ class FIFOCache(BaseCaching):
 
     def get(self, key):
         """ return the value in self.cache_data linked to key."""
-        if key is None or key not in self.cache_data.keys():
-            return None
-
-        return self.cache_data.get(key)
+        return self.cache_data.get(key, None)
 
     def move_to_last_in(self, key):
         """Move an element to the init the list"""
