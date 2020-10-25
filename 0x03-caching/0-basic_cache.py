@@ -1,21 +1,29 @@
-#!/usr/bin/python3
-""" BasicCaching module"""
-from base_caching import BaseCaching
+#!usr/bin/python3
+""" 0-basic_cache.py - basic cache
+"""
+
+from base_caching import *
 
 
 class BasicCache(BaseCaching):
-    """Basic Cache"""""
-    def __init__(self):
-        """Init function"""
-        super().__init__()
-
+    """ BasicCache - class definition
+    """
     def put(self, key, item):
-        """Must assign value for the key."""
-        if key is not None or item is not None:
+        """ put() - xxx
+        Arguments:
+        key: key of dictionary
+        item: value of dictionary
+        Returns: updated dictionary self.cache_data
+        """
+        if key is not None and item is not None:
             self.cache_data[key] = item
 
     def get(self, key):
-        """Return the value in self.cache_data linked to key."""
-        if key is None:
+        """ get() - xxx
+        Arguments:
+        key: key of dictionary
+        Returns dictionary value pertaining to key
+        """
+        if key is None or key not in self.cache_data:
             return None
-        return self.cache_data.get(key, None)
+        return self.cache_data[key]
