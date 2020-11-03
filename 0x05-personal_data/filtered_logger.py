@@ -65,3 +65,17 @@ class RedactingFormatter(logging.Formatter):
                             self.REDACTION,
                             super().format(record),
                             self.SEPARATOR)
+
+
+if __name__ == '__main__':
+    con = get_db()
+    cursor = con.cursor()
+    cursor.execute('SELECT * FROM users;')
+    fields = [user[0] for user in cursor.description]
+    print(fields)
+
+    logger = get_logger()
+
+    for i in cursor:
+        row = ''.join([f'{f}={str(r)}; ' for r, f in zip(i, fields)])
+        logger.info(row)
