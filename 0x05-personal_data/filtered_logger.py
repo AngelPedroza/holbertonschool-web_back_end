@@ -11,6 +11,7 @@ def get_logger() -> logging.Logger:
     """Get the logger to show the information in the next functions"""
     logger = logging.getLogger('user_data')
     logger.setLevel(logging.INFO)
+    logger.propagate = False
 
     handler = logging.StreamHandler()
     handler.setFormatter(RedactingFormatter(list(PII_FIELDS)))
