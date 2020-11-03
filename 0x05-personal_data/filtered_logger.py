@@ -3,8 +3,20 @@
 from typing import List
 import re
 import logging
+import mysql.connector
+import os
 
 PII_FIELDS = ("name", "email", "phone", "ssn", "password")
+
+
+def get_db() -> mysql.connector.connection.MySQLConnection:
+    """Return a database connector"""
+    user_name = os.getenv('PERSONAL_DATA_DB_USERNAME')
+    password = os.getenv('PERSONAL_DATA_DB_PASSWORD')
+    host = os.getenv('PERSONAL_DATA_DB_HOST')
+    db_name = os.getenv('PERSONAL_DATA_DB_NAME')
+
+    return mysql.connector.connection.MySQLConnection(user=user_name, password=password, host=host, database=db_name)
 
 
 def get_logger() -> logging.Logger:
