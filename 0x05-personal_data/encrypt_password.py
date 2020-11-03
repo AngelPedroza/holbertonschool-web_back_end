@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+""" File with function to encrypt """
 import bcrypt
 
 
