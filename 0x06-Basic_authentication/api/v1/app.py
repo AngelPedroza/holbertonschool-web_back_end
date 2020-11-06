@@ -44,11 +44,8 @@ def forbidden(error) -> str:
 def before_request() -> str:
     """ All before execute the main request
     """
-    if auth is not None:
-        exclude_paths = ['/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/']
-
-        if auth.require_auth(request.path, exclude_paths) is False:
-            return
+    exclude_paths = ['/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/']
+    if auth is not None or auth.require_auth(request.path, exclude_paths) is True:
 
         if auth.authorization_header(request) is None:
             abort(401)
