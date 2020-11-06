@@ -16,18 +16,26 @@ class Auth:
         if path is None or excluded_paths is None or len(excluded_paths) == 0:
             return True
 
-        for i in excluded_paths:
-            if '*' in i:
-                if re.search(i + '?', path):
-                    return False
-
-        slash = True if path[-1] == '/' else False
-        path = path if slash is True else path + '/'
-
-        if path not in excluded_paths:
+        if len(path) == 0:
             return True
 
-        return False
+        slash = True if path[len(path) - 1] == '/' else False
+
+        tmp_path = path if slash else path + '/'
+
+        for exc in excluded_paths:
+            l_exc = len(exc)
+            if l_exc == 0:
+                continue
+
+            if exc[l_exc - 1] != '*':
+                if tmp_path == exc:
+                    return False
+            else:
+                if exc[:-1] == path[:l_exc - 1]:
+                    return False
+
+        return True
 
     def authorization_header(self, request=None) -> str:
         """ Return None
