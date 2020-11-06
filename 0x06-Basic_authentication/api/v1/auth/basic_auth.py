@@ -58,6 +58,8 @@ class BasicAuth(Auth):
             self,
             user_email: str, user_pwd: str
     ) -> TypeVar('User'):
+        """ Verify if there are user credentials
+        """
         if not isinstance(user_email, str) or user_email is None:
             return None
 
@@ -72,4 +74,5 @@ class BasicAuth(Auth):
         for user in users:
             if user.is_valid_password(user_pwd):
                 return user
+
         return None
