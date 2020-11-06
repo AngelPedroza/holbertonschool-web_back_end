@@ -4,6 +4,7 @@
 from typing import List, TypeVar
 from flask import request
 from api.v1.auth.auth import Auth
+from base64 import b64decode
 
 
 class BasicAuth(Auth):
@@ -21,3 +22,16 @@ class BasicAuth(Auth):
             return authorization_header.split(" ")[1]
 
         return None
+
+    def decode_base64_authorization_header(
+            self,
+            base64_authorization_header: str
+    ) -> str:
+        """ Decode The base64 auth
+        """
+        try:
+            utf_val = base64_authorization_header.encode('utf-8')
+            decode = b64decode(utf_val).decode('utf-8')
+            return decode
+        except (AttributeError, ValueError) as a:
+            return None
