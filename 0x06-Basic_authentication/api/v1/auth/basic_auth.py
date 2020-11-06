@@ -19,7 +19,8 @@ class BasicAuth(Auth):
         """ Extract the base64 auth
         """
         if authorization_header is not None and \
-                'Basic' in str(authorization_header).split(" ")[0]:
+                'Basic' in str(authorization_header).split(" ")[0] and \
+                len(str(authorization_header).split(" ")) > 1:
             return authorization_header.split(" ")[1]
 
         return None
