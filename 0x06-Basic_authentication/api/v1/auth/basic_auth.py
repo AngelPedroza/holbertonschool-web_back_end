@@ -19,7 +19,7 @@ class BasicAuth(Auth):
         """ Extract the base64 auth
         """
         if authorization_header is not None and \
-                str(authorization_header).split(" ")[0] == 'Basic':
+                'Basic' in str(authorization_header).split(" ")[0]:
             return authorization_header.split(" ")[1]
 
         return None
@@ -76,3 +76,13 @@ class BasicAuth(Auth):
                 return user
 
         return None
+
+    def current_user(self, request=None) -> TypeVar('User'):
+        """ Check agin the user
+        """
+        basic_value = self.authorization_header(request)
+        value64 = self.extract_base64_authorization_header(basic_value)
+        value_decode = self.decode_base64_authorization_header(value64)
+        email, pwd = self.extract_user_credentials(value_decode)
+        user = self.user_object_from_credentials(email, pwd)
+        return user
