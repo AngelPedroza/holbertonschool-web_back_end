@@ -17,8 +17,9 @@ class Auth:
             return True
 
         for i in excluded_paths:
-            if re.search(i + '?', path):
-                return False
+            if '*' in i:
+                if re.search(i + '?', path):
+                    return False
 
         slash = True if path[-1] == '/' else False
         path = path if slash is True else path + '/'
