@@ -2,9 +2,10 @@
 """ Session Auth module
 """
 from typing import List, TypeVar
-from flask import request
 from api.v1.auth.auth import Auth
+from models.user import User
 import uuid
+import os
 
 
 class SessionAuth(Auth):
@@ -30,3 +31,10 @@ class SessionAuth(Auth):
             return
 
         return self.user_id_by_session_id.get(session_id)
+
+    def current_user(self, request=None):
+        """ Current User
+        """
+        session_id = self.session_cookie(request)
+        user_id = self.user_id_by_session_id.get(session_id)
+        return User.get(user_id)
