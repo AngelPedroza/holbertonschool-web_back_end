@@ -22,7 +22,7 @@ elif AUTH_TYPE == 'basic_auth':
     from api.v1.auth.basic_auth import BasicAuth
     auth = BasicAuth()
 
-elif AUTH_TYPE == 'basic_auth':
+elif AUTH_TYPE == 'session_auth':
     from api.v1.auth.session_auth import SessionAuth
     auth = SessionAuth()
 
@@ -52,10 +52,10 @@ def forbidden(error) -> str:
 def before_request() -> str:
     """ All before execute the main request
     """
-    exclude_paths = ['/api/v1/stat*',
-                     '/api/v1/status/',
+    exclude_paths = ['/api/v1/status/',
                      '/api/v1/unauthorized/',
                      '/api/v1/forbidden/']
+
     if auth is not None and \
             auth.require_auth(request.path, exclude_paths) is True:
 
