@@ -28,13 +28,15 @@ def auth_login():
     for user in users:
         if user.is_valid_password(pwd):
             response = make_response(user.to_json())
-            response.set_cookie(os.getenv('SESSION_NAME'), auth.create_session(user.id))
+            SESSION_NAME = os.getenv('SESSION_NAME')
+            response.set_cookie(SESSION_NAME, auth.create_session(user.id))
             return response
 
     return jsonify({"error": "wrong password"}), 401
 
 
-@app_views.route('/auth_session/logout', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/auth_session/logout', methods=['DELETE'],
+                 strict_slashes=False)
 def logout_session():
     """ Logout Session
     """
