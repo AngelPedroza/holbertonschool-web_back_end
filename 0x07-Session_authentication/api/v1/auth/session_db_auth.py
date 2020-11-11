@@ -35,7 +35,7 @@ class SessionDBAuth(SessionExpAuth):
         if len(session_id) == 0:
             return None
 
-        if datetime.now() > session_ids[0].created_at + timedelta(
+        if datetime.utcnow() > session_ids[0].created_at + timedelta(
                 seconds=self.session_duration
         ):
             return None
@@ -50,10 +50,6 @@ class SessionDBAuth(SessionExpAuth):
 
         session_id = self.session_cookie(request)
         if session_id is None:
-            return False
-
-        user_id = self.user_id_for_session_id(session_id)
-        if user_id is None:
             return False
 
         session_ids = UserSession.search({'session_id': session_id})
