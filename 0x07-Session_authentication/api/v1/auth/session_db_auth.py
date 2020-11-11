@@ -15,7 +15,7 @@ class SessionDBAuth(SessionExpAuth):
         """
         session_id = super().create_session(user_id)
         if session_id is None:
-            return
+            return None
 
         user_session = UserSession(**{'user_id': user_id,
                                       'session_id': session_id})
