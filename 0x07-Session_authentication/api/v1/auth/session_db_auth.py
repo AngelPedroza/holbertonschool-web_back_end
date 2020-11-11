@@ -35,7 +35,7 @@ class SessionDBAuth(SessionExpAuth):
         UserSession.load_from_file()
         session_ids = UserSession.search({'session_id': session_id})
 
-        if not session_id:
+        if not session_ids:
             return None
 
         if datetime.utcnow() > session_ids[0].created_at + timedelta(
