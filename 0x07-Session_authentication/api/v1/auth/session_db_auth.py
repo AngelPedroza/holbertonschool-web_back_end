@@ -20,7 +20,6 @@ class SessionDBAuth(SessionExpAuth):
         user_session = UserSession(**{'user_id': user_id,
                                       'session_id': session_id})
         user_session.save()
-        UserSession.save_to_file()
 
         return session_id
 
@@ -53,13 +52,17 @@ class SessionDBAuth(SessionExpAuth):
         if session_id is None:
             return False
 
+        user_id = self.user_id_for_session_id(session_id)
+        if user_id is None:
+            return False
+
         session_ids = UserSession.search({'session_id': session_id})
         if len(session_ids) == 0:
             return False
 
         try:
             session_ids[0].remove()
-            UserSession.save_to_file()
+            session_ids[0].save()
         except Exception:
             return False
 
