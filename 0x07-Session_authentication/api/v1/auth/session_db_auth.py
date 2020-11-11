@@ -58,7 +58,7 @@ class SessionDBAuth(SessionExpAuth):
 
         try:
             session_ids[0].remove()
-            session_ids[0].save()
+            UserSession.save_to_file()
         except Exception:
             return False
 
