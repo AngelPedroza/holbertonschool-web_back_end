@@ -52,6 +52,10 @@ class SessionDBAuth(SessionExpAuth):
         if session_id is None:
             return False
 
+        user_id = self.user_id_for_session_id(session_id)
+        if not user_id:
+            return False
+
         session_ids = UserSession.search({'session_id': session_id})
         if not session_ids:
             return False
