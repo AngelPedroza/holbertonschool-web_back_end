@@ -6,4 +6,4 @@ import bcrypt
 def _hash_password(password: str) -> str:
     """Convert to a hash
     """
-    return bcrypt.hashpw(password=password.encode())
+    return bcrypt.hashpw(password=password.encode(), salt=bcrypt.gensalt())
