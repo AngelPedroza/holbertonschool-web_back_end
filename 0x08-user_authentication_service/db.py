@@ -23,12 +23,9 @@ class DB:
             self.__session = DBSession()
         return self.__session
 
-    def add_user(self, email=None, hash_pwd=None):
+    def add_user(self, email: str, hash_pwd: str) -> User:
         """Add a new user
         """
-        if email is None or hash_pwd is None:
-            return None
-
         new_user = User(email=email, hashed_password=hash_pwd)
         self._session.add(new_user)
         self._session.commit()
