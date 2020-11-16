@@ -24,6 +24,7 @@ class DB:
 
     def add_user(self, email: str, hashed_password: str) -> User:
         """Add a new user
+        :returns: The new user like a object
         """
         new_user = User(email=email, hashed_password=hashed_password)
         self._session.add(new_user)
