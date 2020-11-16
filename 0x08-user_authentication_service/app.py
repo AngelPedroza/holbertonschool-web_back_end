@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """Flask App"""
-import flask
+from flask import Flask, jsonify
 
-app = flask.Flask()
+app = Flask(__name__)
 
 
 @app.route("/", methods=['GET'], strict_slashes=False)
 def main():
     """Main execute"""
-    return flask.jsonify({"message": "Bienvenue"})
+    return jsonify({"message": "Bienvenue"})
 
 
 if __name__ == "__main__":
