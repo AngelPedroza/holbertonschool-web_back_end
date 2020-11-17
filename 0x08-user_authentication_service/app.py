@@ -27,7 +27,10 @@ def get_user():
     except ValueError:
         return jsonify({"message": "email already registered"}), 400
     else:
-        return jsonify({"email": f"{user.email}", "message": "user created"}), 200
+        return jsonify({
+            "email": f"{user.email}",
+            "message": "user created"
+        }), 200
 
 
 if __name__ == "__main__":
