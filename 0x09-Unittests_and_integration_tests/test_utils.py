@@ -25,3 +25,20 @@ class TestAccessNestedMap(unittest.TestCase):
         :return: Nothing
         """
         self.assertEqual(access_nested_map(nested_map=nested_map, path=path), expected)
+
+    @parameterized.expand([
+        ({}, ("a",), KeyError('a')),
+        ({"a": 1}, ("a", "b"), KeyError('b'))
+    ])
+    def test_access_nested_map_exception(self, nested_map, path, expected):
+        """
+        Tets the exceptions of the function
+        :param nested_map: Dict to test
+        :param path: Keys in the order to access
+        :param expected: Value expected
+        :return: Nothing
+        """
+        with self.assertRaises(KeyError) as err:
+            access_nested_map(nested_map=nested_map, path=path)
+
+        self.assertEqual(repr(err.exception), repr(expected))
