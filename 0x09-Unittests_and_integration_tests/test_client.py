@@ -42,15 +42,15 @@ class TestGithubOrgClient(unittest.TestCase):
     @patch('client.get_json')
     def test_public_repos(self, mock_json):
         """
-        Test public repos
+        Test public repos function
         :return: Nothing
         """
         test_payload = [{"name": "Google"},  {"name": "Facebook"}]
         mock_json.return_value = test_payload
 
         with patch('client.GithubOrgClient._public_repos_url',
-                   new_callable=PropertyMock) as mock:
-            mock.return_value = "test/value"
+                   new_callable=PropertyMock) as mock_repos:
+            mock_repos.return_value = "test/value"
             test_class = GithubOrgClient('test')
             list_test = test_class.public_repos()
 
@@ -58,5 +58,5 @@ class TestGithubOrgClient(unittest.TestCase):
                 {"name": i} for i in list_test
             ]
             self.assertEqual(verify_dict, test_payload)
-            mock.assert_called_once()
+            mock_repos.assert_called_once()
             mock_json.assert_called_once()
