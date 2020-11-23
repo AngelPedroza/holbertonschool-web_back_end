@@ -43,20 +43,29 @@ class TestGithubOrgClient(unittest.TestCase):
     def test_public_repos(self, mock_json):
         """
         Test public repos function
-        :return: Nothing
+        :param mock_json: Mock get_json
+        :return:
         """
-        test_payload = [{"name": "Google"},  {"name": "Facebook"}]
+        test_payload = [{"name": "Google"}, {"name": "Facebook"}]
         mock_json.return_value = test_payload
 
         with patch('client.GithubOrgClient._public_repos_url',
-                   new_callable=PropertyMock) as mock_repos:
-            mock_repos.return_value = "test/value"
+                   new_callable=PropertyMock) as mock_public:
+            mock_public.return_value = "hello/world"
             test_class = GithubOrgClient('test')
-            list_test = test_class.public_repos()
+            res = test_class.public_repos()
 
-            verify_dict = [
-                {"name": i} for i in list_test
-            ]
-            self.assertEqual(verify_dict, test_payload)
-            mock_repos.assert_called_once()
+            check = [i["name"] for i in test_payload]
+            self.assertEqual(res, check)
+
+            mock_public.assert_called_once()
             mock_json.assert_called_once()
+
+    @parameterized.expand([
+        ({"license": {"key": "my_license"}}, "my_license", True),
+        ({"license": {"key": "other_license"}}, "my_license", False)
+    ])
+    def test_has_license(self, repo, license_key, expected):
+        """ unit-test for GithubOrgClient.has_license """
+        result = GithubOrgClient.has_license(repo, license_key)
+        self.assertEqual(result, expected)
