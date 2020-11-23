@@ -18,7 +18,7 @@ class TestAccessNestedMap(unittest.TestCase):
         ({"a": {"b": 2}}, ("a",), {"b": 2}),
         ({"a": {"b": 2}}, ("a", "b"), 2)
     ])
-    def test_access_nested_map(self, nested_map, path, expected):
+    def test_access_nested_map(self, nested_map: dict, path: tuple, expected: int):
         """
         Take the parametrizer and test the access to a dict
         :param nested_map: Dict to test
@@ -34,7 +34,7 @@ class TestAccessNestedMap(unittest.TestCase):
         ({}, ("a",), KeyError('a')),
         ({"a": 1}, ("a", "b"), KeyError('b'))
     ])
-    def test_access_nested_map_exception(self, nested_map, path, expected):
+    def test_access_nested_map_exception(self, nested_map: dict, path: tuple, expected):
         """
         Tets the exceptions of the function
         :param nested_map: Dict to test
@@ -55,7 +55,7 @@ class TestGetJson(unittest.TestCase):
         ("http://example.com", {"payload": True}),
         ("http://holberton.io", {"payload": False})
     ])
-    def test_get_json(self, test_url, test_payload):
+    def test_get_json(self, test_url: str, test_payload: dict):
         """
         Test if a request execute correctly
         :param test_url: Url to tets
