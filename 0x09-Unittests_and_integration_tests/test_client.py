@@ -54,9 +54,9 @@ class TestGithubOrgClient(unittest.TestCase):
             test_class = GithubOrgClient('test')
             list_test = test_class.public_repos()
 
-            verify_dict = [
-                {"name": i} for i in list_test
+            verify_payload = [
+                i['name'] for i in test_payload
             ]
-            self.assertEqual(verify_dict, test_payload)
+            self.assertEqual(list_test, verify_payload)
             mock.assert_called_once()
             mock_json.assert_called_once()
