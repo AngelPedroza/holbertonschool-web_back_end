@@ -28,9 +28,11 @@ def main():
 def get_locale():
     """Get locale
     """
-    locale: str = get_user()
-    if locale is not None and locale in app.config['LANGUAGES']:
-        return locale
+    user: dict = get_user()
+    if user:
+        locale: str or None = user.get('locale')
+        if locale is not None and locale in app.config['LANGUAGES']:
+            return locale
 
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 

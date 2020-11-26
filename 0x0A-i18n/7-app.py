@@ -41,7 +41,7 @@ def get_user() -> dict or None:
 def main():
     """Main function to test i18n
     """
-    return render_template('7-index.html', user=g.get('user'))
+    return render_template('7-index.html', user=getattr(g, 'user', None))
 
 
 @babel.localeselector
@@ -49,9 +49,10 @@ def get_locale():
     """Get locale
     """
     user: dict = get_user()
-    locale: str or None = user.get('locale')
-    if locale is not None and locale in app.config['LANGUAGES']:
-        return locale
+    if user:
+        locale: str or None = user.get('locale')
+        if locale is not None and locale in app.config['LANGUAGES']:
+            return locale
 
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
@@ -61,15 +62,18 @@ def get_timezone():
     """Get time zone
     """
     user: dict = get_user()
-    tz: str or None = user.get('timezone')
+    default_tz: str = app.config['BABEL_DEFAULT_TIMEZONE']
+    if user:
+        tz: str or None = user.get('timezone')
+        print(tz)
+        try:
+            correct_tz = pytz.timezone(tz)
+        except pytz.exceptions.UnknownTimeZoneError:
+            return eval('pytz.' + default_tz.lower())
 
-    try:
-        correct_tz = pytz.timezone(tz)
-    except pytz.exceptions.UnknownTimeZoneError:
-        default_tz: str = app.config['BABEL_DEFAULT_TIMEZONE']
-        return eval('pytz.' + default_tz)
+        return correct_tz.zone
 
-    return correct_tz
+    return eval('pytz.' + default_tz.lower())
 
 
 @app.before_request
@@ -77,8 +81,7 @@ def before_request():
     """Execution before to call the endpoint
     """
     user: dict = get_user()
-    if user is not None:
-        g.user: dict = user
+    g.user: dict = user if user is not None else None
 
 
 if __name__ == "__main__":
