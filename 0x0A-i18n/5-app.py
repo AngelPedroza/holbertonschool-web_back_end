@@ -19,26 +19,6 @@ app.config.from_object(Config)
 babel = Babel(app)
 
 
-@app.route('/', methods=['GET'], strict_slashes=False)
-def main():
-    """Main function to test i18n
-    """
-    return render_template('5-index.html', user=g.get('user'))
-
-
-@babel.localeselector
-def get_locale():
-    """Get locale
-    """
-    user: dict = get_user()
-    if user:
-        locale: str or None = user.get('locale')
-        if locale is not None and locale in app.config['LANGUAGES']:
-            return locale
-
-    return request.accept_languages.best_match(app.config['LANGUAGES'])
-
-
 users = {
     1: {"name": "Balou", "locale": "fr", "timezone": "Europe/Paris"},
     2: {"name": "Beyonce", "locale": "en", "timezone": "US/Central"},
@@ -57,6 +37,26 @@ def get_user() -> Union[dict, None]:
         user = None
 
     return user
+
+
+@app.route('/', methods=['GET'], strict_slashes=False)
+def main():
+    """Main function to test i18n
+    """
+    return render_template('5-index.html', user=g.get('user'))
+
+
+@babel.localeselector
+def get_locale():
+    """Get locale
+    """
+    user: dict = get_user()
+    if user:
+        locale: str or None = user.get('locale')
+        if locale is not None and locale in app.config['LANGUAGES']:
+            return locale
+
+    return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
 @app.before_request
