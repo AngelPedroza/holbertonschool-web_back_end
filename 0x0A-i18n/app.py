@@ -51,7 +51,8 @@ def main():
         except pytz.exceptions.UnknownTimeZoneError:
             correct_tz = eval('pytz.' + default_tz.lower())
 
-        current_time = format_datetime(datetime.now(correct_tz), "MMM d, yyyy, H:mm:ss a")
+        current_time = format_datetime(datetime.now(correct_tz),
+                                       "MMM d, yyyy, H:mm:ss a")
     return render_template('index.html',
                            user=getattr(g, 'user', None),
                            current_time=current_time)

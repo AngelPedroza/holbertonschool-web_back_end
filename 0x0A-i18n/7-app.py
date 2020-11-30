@@ -8,6 +8,7 @@ import pytz
 
 
 class Config(object):
+    """The config class"""
 
     LANGUAGES = ['en', 'fr']
     BABEL_DEFAULT_LOCALE = 'en'
