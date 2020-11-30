@@ -6,6 +6,10 @@ from flask_babel import Babel
 from typing import Union
 
 
+app = Flask(__name__)
+babel = Babel(app)
+
+
 class Config(object):
     """The config class"""
 
@@ -14,10 +18,7 @@ class Config(object):
     BABEL_DEFAULT_TIMEZONE = 'UTC'
 
 
-app = Flask(__name__)
 app.config.from_object(Config)
-babel = Babel(app)
-
 
 users = {
     1: {"name": "Balou", "locale": "fr", "timezone": "Europe/Paris"},
