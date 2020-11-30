@@ -43,7 +43,7 @@ def get_user() -> Union[dict, None]:
 def main():
     """Main function to test i18n
     """
-    return render_template('5-index.html', user=g.get('user'))
+    return render_template('5-index.html')
 
 
 @babel.localeselector
