@@ -29,7 +29,9 @@ users = {
 
 
 def get_user() -> Union[dict, None]:
-    """Get the user that is called from the URI with the endpoint
+    """ Returns a user dictionary or
+        None if the ID cannot be found or
+        if login_as was not passed.
     """
     try:
         login_as = request.args.get("login_as")
