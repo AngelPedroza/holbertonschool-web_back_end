@@ -49,7 +49,7 @@ users = {
 def get_user() -> dict or None:
     """Get the user
     """
-    user_id = request.args.get('login_as')
+    user_id: str = request.args.get('login_as')
 
     if user_id is None or user_id == '':
         user_id = None

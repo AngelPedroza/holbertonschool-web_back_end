@@ -29,8 +29,13 @@ users = {
 def get_user() -> dict or None:
     """Get the user
     """
-    user_id: str or None = request.args.get('login_as')
-    user_id: int or None = user_id if user_id is None else int(user_id)
+    user_id: str = request.args.get('login_as')
+
+    if user_id is None or user_id == '':
+        user_id = None
+    else:
+        user_id = int(user_id)
+
     if user_id is None or user_id not in list(users.keys()):
         return None
 
