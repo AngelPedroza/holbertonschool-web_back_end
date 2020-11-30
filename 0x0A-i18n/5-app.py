@@ -3,6 +3,7 @@
 """
 from flask import Flask, render_template, request, g
 from flask_babel import Babel
+from typing import Union
 
 
 class Config(object):
@@ -46,7 +47,7 @@ users = {
 }
 
 
-def get_user() -> dict or None:
+def get_user() -> Union[dict, None]:
     """Get the user
     """
     try:
