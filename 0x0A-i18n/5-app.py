@@ -40,15 +40,24 @@ def get_user() -> Union[dict, None]:
     return user
 
 
+@app.before_request
+def before_request():
+    """Execution before to call the endpoint
+    """
+    user = get_user()
+    if user is not None:
+        g.user = user
+
+
 @app.route('/', methods=['GET'], strict_slashes=False)
-def main():
+def main() -> str:
     """Main function to test i18n
     """
     return render_template('5-index.html')
 
 
 @babel.localeselector
-def get_locale():
+def get_locale() -> str:
     """Get locale
     """
     user: dict = get_user()
@@ -58,15 +67,6 @@ def get_locale():
             return locale
 
     return request.accept_languages.best_match(app.config['LANGUAGES'])
-
-
-@app.before_request
-def before_request():
-    """Execution before to call the endpoint
-    """
-    user = get_user()
-    if user is not None:
-        g.user = user
 
 
 if __name__ == "__main__":
