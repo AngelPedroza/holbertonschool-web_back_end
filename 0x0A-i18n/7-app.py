@@ -30,17 +30,13 @@ users = {
 def get_user() -> dict or None:
     """Get the user
     """
-    user_id: str = request.args.get('login_as')
+    try:
+        login_as = request.args.get("login_as")
+        user = users[int(login_as)]
+    except Exception:
+        user = None
 
-    if user_id is None or user_id == '':
-        user_id = None
-    else:
-        user_id = int(user_id)
-
-    if user_id is None or user_id not in list(users.keys()):
-        return None
-
-    return users.get(user_id)
+    return user
 
 
 @app.route('/', methods=['GET'], strict_slashes=False)
