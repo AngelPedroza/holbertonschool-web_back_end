@@ -1,17 +1,15 @@
 #!/usr/bin/env python3
-"""My flask app
-"""
+""" Module for trying out Babel i18n """
+from flask_babel import Babel, _
 from flask import Flask, render_template, request, g
-from flask_babel import Babel
 from typing import Union
 
-
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates')
 babel = Babel(app)
 
 
 class Config(object):
-    """The config class"""
+    """ Configuration Class for Babel """
 
     LANGUAGES = ['en', 'fr']
     BABEL_DEFAULT_LOCALE = 'en'
@@ -30,9 +28,10 @@ users = {
 
 def get_user() -> Union[dict, None]:
     """ Returns a user dictionary or
-        None if the ID cannot be found or
-        if login_as was not passed.
+    None if the ID cannot be found or
+    if login_as was not passed.
     """
+
     try:
         login_as = request.args.get("login_as")
         user = users[int(login_as)]
@@ -44,32 +43,25 @@ def get_user() -> Union[dict, None]:
 
 @app.before_request
 def before_request():
-    """Execution before to call the endpoint
-    """
+    """ Operations that happen before any request """
     user = get_user()
-    if user is not None:
-        g.user = user
+    g.user = user
 
 
 @app.route('/', methods=['GET'], strict_slashes=False)
-def main() -> str:
-    """Main function to test i18n
-    """
-    return render_template('5-index.html')
+def hello_world() -> str:
+    """Renders a Basic Template for Babel Implementation"""
+    return render_template("5-index.html")
 
 
 @babel.localeselector
 def get_locale() -> str:
-    """Get locale
-    """
-    user: dict = get_user()
-    if user:
-        locale: str or None = user.get('locale')
-        if locale is not None and locale in app.config['LANGUAGES']:
-            return locale
-
+    """Select a language translation to use for that request"""
+    locale = request.args.get("locale")
+    if locale and locale in app.config['LANGUAGES']:
+        return locale
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port="5000")
+    app.run()
