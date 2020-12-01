@@ -2,7 +2,7 @@
 """ Module to study Redis and practice """
 import redis
 from uuid import uuid4
-from typing import Union
+from typing import Union, Callable, Optional
 
 
 class Cache:
@@ -21,3 +21,19 @@ class Cache:
         self._redis.set(key, data)
 
         return key
+
+    def get(
+            self,
+            key: str,
+            fn: Optional[Callable] = None
+    ) -> Union[str, bytes, int, float]:
+        """Get method. Extract the information saved in redis
+        with the key that is passed.
+        """
+        value = self._redis.get(key)
+        try:
+            res = fn(value)
+        except Exception:
+            return value
+
+        return res
