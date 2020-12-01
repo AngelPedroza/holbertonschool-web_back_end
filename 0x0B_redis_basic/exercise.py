@@ -19,4 +19,5 @@ class Cache:
         """
         key = str(uuid4())
         self._redis.set(key, data)
+
         return key
