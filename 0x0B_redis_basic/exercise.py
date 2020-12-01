@@ -52,10 +52,20 @@ def replay(method: Callable) -> str:
 
     print(f"{funtion_name} was called {count} times:")
 
-    inputs = r.lrange(f"{funtion_name}:inputs", 0, -1).decode('utf-8')
-    outputs = r.lrange(f"{funtion_name}:outputs", 0, -1).decode('utf-8')
+    inputs = r.lrange(f"{funtion_name}:inputs", 0, -1)
+    outputs = r.lrange(f"{funtion_name}:outputs", 0, -1)
 
     for one, two in zip(inputs, outputs):
+        try:
+            one.decode('utf-8')
+        except Exception:
+            one = ""
+
+        try:
+            two.decode('utf-8')
+        except Exception:
+            two = ""
+
         print(f"{funtion_name}(*{one}) -> {two}")
 
 
