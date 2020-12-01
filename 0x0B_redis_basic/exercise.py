@@ -6,7 +6,7 @@ from typing import Union
 
 
 class Cache:
-    """My cache class for redis"""
+    """ My cache class for redis """
 
     def __init__(self):
         """Constructor method
