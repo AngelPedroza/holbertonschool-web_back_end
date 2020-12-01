@@ -9,8 +9,7 @@ class Cache:
     """ My cache class for redis """
 
     def __init__(self):
-        """Constructor method
-        """
+        """ Constructor method """
         self._redis = redis.Redis()
         self._redis.flushdb()
 
