@@ -28,10 +28,10 @@ def call_history(method: Callable) -> Callable:
     def wrapped(self, *args, **kwargs):
         """Extra behavior to function that will count"""
         input = str(*args)
-        self._redis.lpush(method.__qualname__ + ":inputs", input)
+        self._redis.rpush(method.__qualname__ + ":inputs", input)
 
         output = str(method(self, *args, **kwargs))
-        self._redis.lpush(method.__qualname__ + ":outputs", output)
+        self._redis.rpush(method.__qualname__ + ":outputs", output)
 
         return output
 
