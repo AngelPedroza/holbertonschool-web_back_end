@@ -50,7 +50,7 @@ def replay(method: Callable) -> str:
     except Exception:
         count = 0
 
-    print(f"{funtion_name} was called {count} times")
+    print(f"{funtion_name} was called {count} times:")
 
     inputs = r.lrange(f"{funtion_name}:inputs", 0, -1).decode('utf-8')
     outputs = r.lrange(f"{funtion_name}:outputs", 0, -1).decode('utf-8')
