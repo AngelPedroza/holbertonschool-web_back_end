@@ -7,8 +7,10 @@ from typing import Union
 
 
 class Cache:
+    """My cache class for redis"""
+
     def __init__(self):
-        """Construntor method
+        """Constructor method
         """
         self._redis = Redis()
         self._redis.flushdb()
