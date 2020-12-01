@@ -38,7 +38,7 @@ def call_history(method: Callable) -> Callable:
     return wrapped
 
 
-def replay(method: Callable) -> str:
+def replay(method: Callable):
     """Display the history of calls of a
     particular function.
     """
@@ -52,20 +52,10 @@ def replay(method: Callable) -> str:
 
     print(f"{funtion_name} was called {count} times:")
 
-    inputs = r.lrange(f"{funtion_name}:inputs", 0, -1)
-    outputs = r.lrange(f"{funtion_name}:outputs", 0, -1)
+    inputs = r.lrange(f"{funtion_name}:inputs", 0, -1).decode('utf-8')
+    outputs = r.lrange(f"{funtion_name}:outputs", 0, -1).decode('utf-8')
 
     for one, two in zip(inputs, outputs):
-        try:
-            one.decode('utf-8')
-        except Exception:
-            one = ""
-
-        try:
-            two.decode('utf-8')
-        except Exception:
-            two = ""
-
         print(f"{funtion_name}(*{one}) -> {two}")
 
 
