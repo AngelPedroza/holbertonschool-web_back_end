@@ -27,7 +27,7 @@ def call_history(method: Callable) -> Callable:
     @wraps(method)
     def wrapped(self, *args, **kwargs):
         """Extra behavior to function that will count"""
-        input = str(*args)
+        input = str(args)
         self._redis.rpush(method.__qualname__ + ":inputs", input)
 
         output = str(method(self, *args, **kwargs))
