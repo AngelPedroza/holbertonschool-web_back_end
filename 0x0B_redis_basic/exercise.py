@@ -13,7 +13,7 @@ class Cache:
         self._redis = Redis()
         self._redis.flushdb()
 
-    def stores(self, data: Union[str, bytes, int, float]) -> str:
+    def store(self, data: Union[str, bytes, int, float]) -> str:
         """takes a data argument and returns a string
         """
         key = str(uuid4())
