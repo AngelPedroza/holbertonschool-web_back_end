@@ -31,9 +31,7 @@ class Cache:
         with the key that is passed.
         """
         value = self._redis.get(key)
-        try:
-            res = fn(value)
-        except Exception:
-            return value
+        if fn:
+            value = fn(value)
 
-        return res
+        return value
