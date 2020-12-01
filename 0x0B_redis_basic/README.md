@@ -1,1 +1,1 @@
-REDIS is just a fancy hash table
+#REDIS is just a fancy hash table
