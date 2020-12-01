@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
-"""My cache class module
-"""
-from redis import Redis
+""" My cache class module """
+import redis
 from uuid import uuid4
 from typing import Union
 
@@ -12,11 +11,11 @@ class Cache:
     def __init__(self):
         """Constructor method
         """
-        self._redis = Redis()
+        self._redis = redis.Redis()
         self._redis.flushdb()
 
     def store(self, data: Union[str, bytes, int, float]) -> str:
-        """takes a data argument and returns a string
+        """Set data with a uuid key directly in redis
         """
         key = str(uuid4())
         self._redis.set(key, data)
