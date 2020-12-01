@@ -7,6 +7,7 @@ import redis
 
 
 def count(method: Callable):
+    """Count the call to requests"""
     r = redis.Redis()
 
     @wraps(method)
