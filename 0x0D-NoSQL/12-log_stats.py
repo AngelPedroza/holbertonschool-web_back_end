@@ -6,10 +6,11 @@ client = MongoClient('mongodb://127.0.0.1:27017')
 collention = client.logs.nginx
 
 print(f"{collention.estimated_document_count()} logs")
+
 print("Methods:")
 for method in ["GET", "POST", "PUT", "PATCH", "DELETE"]:
-    print("\tmethod {}: {}".format(method,
-                                   collention.count_documents({
-                                       'method': method
-                                   })))
-print(collention.count_documents({'path': "/status"}), "status check")
+    method_count = collention.count_documents({'method': method})
+    print(f"\tmethod {method}: {method_count}")
+
+check_get = collention.count_documents({'method': 'GET', 'path': "/status"})
+print(f"{check_get} status check")
