@@ -1,0 +1,2 @@
+// Get a match
+db.school.aggregate({ $match: { name: "Holberton school" } })
