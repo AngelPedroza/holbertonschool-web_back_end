@@ -10,4 +10,3 @@ def schools_by_topic(mongo_collection, topic):
     :return: The list of matchs
     """
     return [i for i in mongo_collection.find({"topic": topic})]
-
