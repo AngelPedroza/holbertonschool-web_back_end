@@ -8,8 +8,8 @@ collention = client.logs.nginx
 print(f"{collention.estimated_document_count()} logs")
 print("Methods:")
 for method in ["GET", "POST", "PUT", "PATCH", "DELETE"]:
-    print(
-        f"\tmethod {method}: \
-        {collention.count_documents({'method': method})}"
-    )
+    print("\tmethod {}: {}".format(method,
+                                   collention.count_documents({
+                                       'method': method
+                                   })))
 print(collention.count_documents({'path': "/status"}), "status check")
