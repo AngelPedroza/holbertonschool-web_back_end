@@ -1,8 +1,9 @@
 export default function taskBlock(trueOrFalse) {
-  let task = false;
-  let task2 = true;
+  var task = false;
+  var task2 = true;
 
   if (trueOrFalse) {
+      /*change disable*/
     const task = true;
     const task2 = false;
   }
