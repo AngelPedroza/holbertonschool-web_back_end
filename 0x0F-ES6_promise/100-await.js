@@ -7,8 +7,8 @@ async function asyncUploadUser() {
   };
 
   try {
-    const r1 = await uploadPhoto().then(values => values)
-    json.photo = r1
+    const r1 = await uploadPhoto();
+    json.photo = r1;
   } catch (err) {
     json.user = null;
     json.photo = null;
@@ -16,8 +16,8 @@ async function asyncUploadUser() {
   };
 
   try {
-    const r2 = await createUser().then(values => values)
-    json.user = r2
+    const r2 = await createUser();
+    json.user = r2;
   } catch (err) {
     json.user = null;
     json.photo = null;
