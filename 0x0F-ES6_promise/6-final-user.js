@@ -10,9 +10,9 @@ async function handleProfileSignup(firstName, lastName, fileName) {
   };
 
   try {
-    const signup_promise = await signUpUser(firstName, lastName);
+    const sigpromise = await signUpUser(firstName, lastName);
     json1.status = 'fulfilled';
-    json1.value = signup_promise;
+    json1.value = sigpromise;
   } catch (err) {
     json1.status = 'rejected';
     json1.value = err.toString();
