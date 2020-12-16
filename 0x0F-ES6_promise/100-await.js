@@ -8,16 +8,9 @@ async function asyncUploadUser() {
 
   try {
     const r1 = await uploadPhoto();
-    json.photo = r1;
-  } catch (err) {
-    json.user = null;
-    json.photo = null;
-    return json;
-  };
-
-  try {
     const r2 = await createUser();
     json.user = r2;
+    json.photo = r1;
   } catch (err) {
     json.user = null;
     json.photo = null;
