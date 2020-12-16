@@ -1,5 +1,5 @@
-import signUpUser from "./4-user-promise"
-import uploadPhoto from "./5-photo-reject"
+import signUpUser from "./4-user-promise";
+import uploadPhoto from "./5-photo-reject";
 
 async function handleProfileSignup(firstName, lastName, fileName) {
   const json1 = {
@@ -28,7 +28,7 @@ async function handleProfileSignup(firstName, lastName, fileName) {
     json2.value = err.toString();
   }
 
-  return [json1, json2]
+  return [json1, json2];
 }
 
 export default handleProfileSignup;
