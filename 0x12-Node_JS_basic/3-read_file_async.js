@@ -27,7 +27,7 @@ function countStudents(path) {
             console.log(`Number of students in ${i}: ${dict[i].length}. List: ${dict[i].join(', ')}`);
           }
         }
-        resolve()
+        resolve();
       }
     });
   };
