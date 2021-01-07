@@ -6,7 +6,7 @@ export default class StudentsController {
       .then((data) => {
         const msg = 'This is the list of our students\n';
         const newData = msg + data;
-        response.send(200, newData);
+        response.send(200, newData.slice(0, -1));
       })
       .catch((error) => {
         response.send(500, error.message);
