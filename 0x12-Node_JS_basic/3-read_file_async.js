@@ -1,40 +1,52 @@
 const fs = require('fs');
 
-function countStudents(path='none') {
-  return new Promise((resolve, reject) => {
-    fs.readFile(path, (error, data) => {
-      if (error) reject(Error('Cannot load the database'));
-      if (data) {
-        const response = [];
-        const content = data.toString();
-        const chainStudents = content.split('\n');
-        let students = chainStudents.filter((item) => item);
-
-        const NUMBER_OF_STUDENTS = students.length ? students.length - 1 : 0;
-        const msg = `Number of students: ${NUMBER_OF_STUDENTS}`;
-        console.log(msg);
-        response.push(msg);
-
-        students = students.slice(1);
-        const dict = {};
-        students.forEach((element) => {
-          const list = element.split(',');
-          const key = list[3];
-          if (!(key in dict)) {
-            dict[key] = [];
-          }
-          dict[key].push(`${list[0]}`);
-        });
-        for (const i in dict) {
-          if (i) {
-            const msg2 = `Number of students in ${i}: ${dict[i].length}. List: ${dict[i].join(', ')}`;
-            console.log(msg2);
-            response.push(msg2);
-          }
-        }
-        resolve(response);
+module.exports = function countStudents(path) {
+  return new Promise(((resolve, reject) => {
+    fs.readFile(path, 'utf8', (err, paramsStudents) => {
+      if (err) {
+        reject(Error('Cannot load the database'));
+        return;
       }
+
+      let students = paramsStudents;
+      students = students.split('\n');
+      const headers = students.shift().split(',');
+
+      const groupingStudentsField = {};
+      const studentsObjects = [];
+
+      students.forEach((student) => {
+        if (student) {
+          const studentInfo = student.split(',');
+          const studentObject = {};
+
+          headers.forEach((header, index) => {
+            studentObject[header] = studentInfo[index];
+            if (header === 'field') {
+              if (groupingStudentsField[studentInfo[index]]) {
+                groupingStudentsField[studentInfo[index]].push(studentObject.firstname);
+              } else {
+                groupingStudentsField[studentInfo[index]] = [studentObject.firstname];
+              }
+            }
+          });
+          studentsObjects.push(studentObject);
+        }
+      });
+      const numberStudents = `Number of students: ${studentsObjects.length}`;
+
+      let response = `${numberStudents}\n`;
+      console.log(numberStudents);
+
+      for (const groupStudent in groupingStudentsField) {
+        if (groupingStudentsField[groupStudent]) {
+          const listStudents = groupingStudentsField[groupStudent];
+          const responseGroupStudents = `Number of students in ${groupStudent}: ${listStudents.length}. List: ${listStudents.join(', ')}`;
+          response += `${responseGroupStudents}\n`;
+          console.log(responseGroupStudents);
+        }
+      }
+      resolve(response);
     });
-  });
-}
-module.exports = countStudents;
+  }));
+};
