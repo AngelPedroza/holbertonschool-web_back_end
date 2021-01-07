@@ -1,6 +1,5 @@
 const express = require('express');
 const countStudents = require('./3-read_file_async');
-
 const args = process.argv.slice(2);
 
 const app = express();
@@ -10,12 +9,12 @@ app.get('/', (req, res) => {
   res.send('Hello Holberton School!');
 });
 
-app.get('/students', async (req, res) => {
+app.get('/students', (req, res) => {
   const msg = 'This is the list of our students\n';
-  await countStudents(args[0]).then((value) => {
+  countStudents(args[0]).then((value) => {
     res.send(`${value.join('\n')}`);
   }).catch((error) => {
-    res.send(`${msg}${error.message}`);
+    res.send(`${error.message}`);
   });
 });
 
