@@ -12,11 +12,11 @@ app.get('/', (req, res) => {
 
 app.get('/students', async (req, res) => {
   const msg = 'This is the list of our students\n';
-    await countStudents(args[0]).then((value) => {
-      res.send(`${value.join('\n')}`);
-    }).catch((error) => {
-      res.send(`${error}`);
-    });
+  await countStudents(args[0]).then((value) => {
+    res.send(`${value.join('\n')}`);
+  }).catch((error) => {
+    res.send(`${msg}${error.message}`);
+  });
 });
 
 app.listen(PORT, () => {
