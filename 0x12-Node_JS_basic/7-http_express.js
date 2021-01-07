@@ -14,7 +14,7 @@ app.get('/students', (req, res) => {
   countStudents(args[0]).then((value) => {
     res.send(`${value.join('\n')}`);
   }).catch((error) => {
-    res.send(`${error.message}`);
+    res.send(`${msg}`);
   });
 });
 
